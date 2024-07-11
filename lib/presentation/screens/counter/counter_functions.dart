@@ -15,6 +15,7 @@ class _CounterFunctionState extends State<CounterFunction> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.red,
         title: const Text('Counter Functions'),
         actions: [
           IconButton(
@@ -48,44 +49,32 @@ class _CounterFunctionState extends State<CounterFunction> {
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          FloatingActionButton(
-            shape: const StadiumBorder(),
+          CustomButton(
+            icon: Icons.refresh_outlined,
             onPressed: () {
-              //Funcion para que vuelva a renderizar el Widget completo
               setState(() {
-                //funcion para ir sumando uno cuando se le de click al boton
-                //Metodo 1:
-                // clickCounter = clickCounter + 1;
-                //Metodo 2:
-                // clickCounter += 1;
-                //Metodo 3:
                 clickCounter = 0;
               });
             },
-            child: const Icon(Icons.refresh),
           ),
-
           const SizedBox(height: 15),
-          FloatingActionButton(
-            shape: const StadiumBorder(),
+          CustomButton(
+            icon: Icons.exposure_minus_1_outlined,
             onPressed: () {
-              //Funcion para que vuelva a renderizar el Widget completo
               setState(() {
-                //funcion para ir sumando uno cuando se le de click al boton
-                //Metodo 1:
-                // clickCounter = clickCounter + 1;
-                //Metodo 2:
-                // clickCounter += 1;
-                //Metodo 3:
-                clickCounter ++;
+                clickCounter == 0 ? '' : clickCounter--;
               });
             },
-            child: const Icon(Icons.plus_one),
           ),
-
           const SizedBox(height: 15),
-
-          CustomButton(icon: Icons.refresh_outlined,)
+          CustomButton(
+            icon: Icons.plus_one,
+            onPressed: () {
+              setState(() {
+                clickCounter++;
+              });
+            },
+          ),
         ],
       )
     );
@@ -94,19 +83,23 @@ class _CounterFunctionState extends State<CounterFunction> {
 
 class CustomButton extends StatelessWidget {
 
-  final IconData icon; 
+  final IconData icon;
+  final VoidCallback? onPressed;
 
   const CustomButton({
     super.key, 
     required this.icon,
+    this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
       shape: const StadiumBorder(),
-      onPressed: () {},
-      child: Icon(icon),
+      elevation: 5,
+      backgroundColor: Colors.red,
+      onPressed: onPressed,
+      child: Icon(icon, color: Colors.white,),
     );
   }
 }
